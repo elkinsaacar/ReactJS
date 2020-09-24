@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import Formulario from './Formulario'
 import Meme from './Meme'
+//import html2canvas from 'html2canvas'
+/* ES6 */
+import htmlToImage from 'html-to-image';
+/* ES5 */
+//var htmlToImage = require('html-to-image');
 
 export default class Generador extends Component {
 
@@ -27,7 +32,59 @@ export default class Generador extends Component {
         alert("Enviar formulario !!");
     }
 
+    
     render() {
+
+        const descargarImagen = () => {
+            //alert("-Descarguemosla-");
+            //download(this.state.urlImg);
+            download();
+        }
+
+        /*const download = (url) => {
+            console.log(url);
+            fetch(url, {
+              method: "GET",
+              headers: {}
+            })
+            .then(response => {
+            response.arrayBuffer().then(function(buffer) {
+                const url = window.URL.createObjectURL(new Blob([buffer]));
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "image.png"); //or any other extension
+                document.body.appendChild(link);
+                link.click();
+            });
+            })
+            .catch(err => {
+            console.log(err);
+            });
+        };*/
+        
+        const download = () => {
+            //alert("-download-");
+            var node = document.getElementById('ContenedorImg');
+            htmlToImage.toPng(node)
+                .then(function (dataUrl){
+                    //var img = new Image();
+                    //img.src = dataUrl;
+                    //document.body.appendChild(img);
+                    //download(dataUrl, 'ImagenMeme.png');
+
+                    var link = document.createElement('a');
+                    link.download = 'my-image-name.jpeg';
+                    link.href = dataUrl;
+                    link.click();
+
+                })
+                /*.then(function (blob) {
+                    window.saveAs(blob, 'my-node.png');
+                  })*/
+                .catch(function (error) {
+                    console.error('oops, something went wrong!', error);
+                });
+        };
 
         const styles = {
             generador:{
@@ -53,6 +110,8 @@ export default class Generador extends Component {
                         handleChange={this.handleChange}
                         handleSubmit={this.handleSubmit} />
                 </div>
+                <br/><br/>
+                <button type="button" id="btn_download" name="btn_download" onClick={descargarImagen} > Descargar Imagen </button>
             </div>
         )
     }

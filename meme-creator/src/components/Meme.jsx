@@ -31,8 +31,9 @@ const Meme = ({textoSuperior, textoInferior, colorTexto, urlImg}) => {
         }
     };
 
+    //const myRef = React.createRef();
     return (
-        <div style={styles.divPrincipal}>
+        <div style={styles.divPrincipal} id="ContenedorImg">
             <img src={urlImg}  style={styles.estilosImg} />
             <div style={styles.divSuperior}>
                 {textoSuperior}

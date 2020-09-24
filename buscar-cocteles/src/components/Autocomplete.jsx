@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import DetalleCoctel from './DetalleCoctel';
 
 const Autocomplete = () => {
 
     //const [nombreCoctel, setNombreCoctel] = useState('mojito');
     const [nombreCoctel, setNombreCoctel] = useState('');
     const [listaCocteles, setListaCocteles] = useState([]);
+    const [IDCoctelSeleccionado, setIDCoctelSeleccionado] = useState(0);
 
     useEffect(() =>{
         if( nombreCoctel.length > 3 ){
@@ -24,8 +26,9 @@ const Autocomplete = () => {
         setNombreCoctel(event.target.value)
     }
 
-    const verDetalleCoctel = () => {
-        alert("-ver detalle-");
+    const verDetalleCoctel = (idDrink) => {
+        //alert("--ver detalle-"+idDrink+"--");
+        setIDCoctelSeleccionado(idDrink);
     }
 
     const estilosVerDetalleCoctel = {
@@ -36,10 +39,10 @@ const Autocomplete = () => {
     const resultadosCocteles = listaCocteles.map(
         coctel => {
             return(
-            <li key={coctel.idDrink} data-id-drink={coctel.idDrink}>
+            <li key={coctel.idDrink}>
                 {coctel.strDrink}
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <span onClick={verDetalleCoctel} style={estilosVerDetalleCoctel}>&nbsp;Ver Más&nbsp;</span>
+                <span onClick={() => verDetalleCoctel(coctel.idDrink)} style={estilosVerDetalleCoctel}>&nbsp;Ver Más&nbsp;</span>
             </li>
             )
         }
@@ -50,6 +53,8 @@ const Autocomplete = () => {
             <input type="text" value={nombreCoctel} onChange={handleChangeCoctel} placeholder="Ejm.: Mojito, Cuba Libre" />
             <hr/>
             <ul> {resultadosCocteles} </ul>
+            <hr/>
+            <DetalleCoctel IDCoctel={IDCoctelSeleccionado} />
         </div>
     )
 }

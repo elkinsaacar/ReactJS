@@ -53,7 +53,6 @@ const Autocomplete = () => {
             <input type="text" value={nombreCoctel} onChange={handleChangeCoctel} placeholder="Ejm.: Mojito, Cuba Libre" />
             <hr/>
             <ul> {resultadosCocteles} </ul>
-            <hr/>
             <DetalleCoctel IDCoctel={IDCoctelSeleccionado} />
         </div>
     )
